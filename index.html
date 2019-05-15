@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Hungry</title>
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <meta name="twitter:card" content="photo">
+    <meta name="twitter:site" content="@imac2">
+    <meta name="twitter:creator" content="@imac2">
+    <meta name="twitter:title" content="fullPage.js">
+    <meta name="twitter:description" content="Great Javascript library to create fullscreen scrolling websites">
+    <meta name="twitter:image" content="https://alvarotrigo.com/fullPage/imgs/share.png">
+    <meta name="twitter:url" content="https://alvarotrigo.com/fullPage/">
+    <meta name="Resource-type" content="Document">
+
+    <link rel="canonical" href="https://alvarotrigo.com/fullPage/">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://alvarotrigo.com/fullPage/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="https://alvarotrigo.com/fullPage/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://alvarotrigo.com/fullPage/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="https://alvarotrigo.com/fullPage/favicons/manifest.json">
+    <link rel="mask-icon" href="https://alvarotrigo.com/fullPage/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="https://alvarotrigo.com/fullPage/favicons/favicon.ico">
+    <meta name="apple-mobile-web-app-title" content="fullPage.js">
+    <meta name="application-name" content="fullPage.js">
+    <meta name="msapplication-config" content="https://alvarotrigo.com/fullPage/favicons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="dns-prefetch" href="https://ajax.googleapis.com">
+    <link rel="dns-prefetch" href="https://ghbtns.com">
+    <link rel="dns-prefetch" href="https://www.google-analytics.com">
+    <link rel="dns-prefetch" href="https://connect.facebook.net">
+
+
+    <link rel="alternate" href="https://alvarotrigo.com/fullPage/" hreflang="en">
+    <link rel="alternate" href="https://alvarotrigo.com/fullPage/zh/" hreflang="zh">
+    <link rel="alternate" href="https://alvarotrigo.com/fullPage/ko/" hreflang="ko">
+    <link rel="alternate" href="https://alvarotrigo.com/fullPage/es/" hreflang="es">
+    <link rel="alternate" href="https://alvarotrigo.com/fullPage/ru/" hreflang="ru">
+
+    <style type="text/css">
+
+        .fp-enabled body,
+        html.fp-enabled {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent
+        }
+
+        .fp-section {
+            position: relative;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box
+        }
+
+        .fp-slide {
+            float: left
+        }
+
+        .fp-slide,
+        .fp-slidesContainer {
+            height: 100%;
+            display: block
+        }
+
+        .fp-slides {
+            z-index: 1;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+            -webkit-transition: all .3s ease-out;
+            transition: all .3s ease-out
+        }
+
+        .fp-section.fp-table,
+        .fp-slide.fp-table {
+            display: table;
+            table-layout: fixed;
+            width: 100%
+        }
+
+        .fp-tableCell {
+            display: table-cell;
+            vertical-align: middle;
+            width: 100%;
+            height: 100%
+        }
+
+        .fp-slidesContainer {
+            float: left;
+            position: relative
+        }
+
+        .fp-controlArrow {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -khtml-user-select: none;
+            -ms-user-select: none;
+            position: absolute;
+            z-index: 4;
+            top: 50%;
+            cursor: pointer;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            margin-top: -38px;
+            -webkit-transform: translate3d(0, 0, 0);
+            -ms-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0)
+        }
+
+        .fp-controlArrow.fp-prev {
+            left: 15px;
+            width: 0;
+            border-width: 38.5px 34px 38.5px 0;
+            border-color: transparent #fff transparent transparent
+        }
+
+        .fp-controlArrow.fp-next {
+            right: 15px;
+            border-width: 38.5px 0 38.5px 34px;
+            border-color: transparent transparent transparent #fff
+        }
+
+        .fp-scrollable {
+            position: relative
+        }
+
+        .fp-scrollable,
+        .fp-scroller {
+            overflow: hidden
+        }
+
+        .iScrollIndicator {
+            border: 0 !important
+        }
+
+        .fp-notransition {
+            -webkit-transition: none !important;
+            transition: none !important
+        }
+
+        #fp-nav,
+        .fp-slidesNav {
+            opacity: 1;
+            -webkit-transform: translate3d(0, 0, 0)
+        }
+
+        #fp-nav {
+            margin-top: -32px;
+            top: 50%;
+            position: fixed;
+            z-index: 100
+        }
+
+        #fp-nav.fp-right {
+            right: 17px
+        }
+
+        #fp-nav.fp-left {
+            left: 17px
+        }
+
+        .fp-slidesNav {
+            position: absolute;
+            z-index: 4;
+            -ms-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+            left: 0 !important;
+            right: 0;
+            margin: 0 auto !important
+        }
+
+        .fp-slidesNav.fp-bottom {
+            bottom: 17px
+        }
+
+        .fp-slidesNav.fp-top {
+            top: 17px
+        }
+
+        #fp-nav ul,
+        .fp-slidesNav ul {
+            margin: 0;
+            padding: 0
+        }
+
+        #fp-nav ul li,
+        .fp-slidesNav ul li {
+            display: block;
+            width: 14px;
+            height: 13px;
+            margin: 7px;
+            position: relative
+        }
+
+        .fp-slidesNav ul li {
+            display: inline-block
+        }
+
+        #fp-nav ul li a,
+        .fp-slidesNav ul li a {
+            display: block;
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            text-decoration: none
+        }
+
+        #fp-nav ul li a.active span,
+        #fp-nav ul li:hover a.active span,
+        .fp-slidesNav ul li a.active span,
+        .fp-slidesNav ul li:hover a.active span {
+            height: 12px;
+            width: 12px;
+            margin: -6px 0 0 -6px;
+            border-radius: 100%
+        }
+
+        #fp-nav ul li a span,
+        .fp-slidesNav ul li a span {
+            border-radius: 50%;
+            position: absolute;
+            z-index: 1;
+            height: 4px;
+            width: 4px;
+            border: 0;
+            background: #333;
+            left: 50%;
+            top: 50%;
+            margin: -2px 0 0 -2px;
+            -webkit-transition: all .1s ease-in-out;
+            -moz-transition: all .1s ease-in-out;
+            -o-transition: all .1s ease-in-out;
+            transition: all .1s ease-in-out
+        }
+
+        #fp-nav ul li:hover a span,
+        .fp-slidesNav ul li:hover a span {
+            width: 10px;
+            height: 10px;
+            margin: -5px 0 0 -5px
+        }
+
+        #fp-nav ul li .fp-tooltip,
+        .fp-sr-only {
+            position: absolute;
+            overflow: hidden;
+            white-space: nowrap
+        }
+
+        #fp-nav ul li .fp-tooltip {
+            top: -2px;
+            color: #fff;
+            font-size: 14px;
+            font-family: arial, helvetica, sans-serif;
+            max-width: 220px;
+            display: block;
+            opacity: 0;
+            cursor: pointer;
+            width: 0
+        }
+
+        #fp-nav ul li:hover .fp-tooltip,
+        #fp-nav.fp-show-active a.active+.fp-tooltip {
+            -webkit-transition: opacity .2s ease-in;
+            transition: opacity .2s ease-in;
+            width: auto;
+            opacity: 1
+        }
+
+        #fp-nav ul li .fp-tooltip.fp-right {
+            right: 20px
+        }
+
+        #fp-nav ul li .fp-tooltip.fp-left {
+            left: 20px
+        }
+
+        .fp-auto-height .fp-slide,
+        .fp-auto-height .fp-tableCell,
+        .fp-auto-height.fp-section,
+        .fp-responsive .fp-auto-height-responsive .fp-slide,
+        .fp-responsive .fp-auto-height-responsive .fp-tableCell,
+        .fp-responsive .fp-auto-height-responsive.fp-section {
+            height: auto !important
+        }
+
+        .fp-sr-only {
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            clip: rect(0, 0, 0, 0);
+            border: 0
+        }
+    </style>
+
+    <style id="stylesheet-critical" type="text/css">
+        @CHARSET "ISO-8859-1";
+
+        blockquote,
+        body,
+        dd,
+        div,
+        dl,
+        dt,
+        fieldset,
+        form,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        input,
+        li,
+        ol,
+        p,
+        pre,
+        td,
+        textarea,
+        th,
+        ul {
+            padding: 0;
+            margin: 0
+        }
+
+        a {
+            text-decoration: none
+        }
+
+        table {
+            border-spacing: 0
+        }
+
+        abbr,
+        acronym,
+        fieldset,
+        img {
+            border: 0
+        }
+
+        address,
+        caption,
+        cite,
+        code,
+        dfn,
+        em,
+        th,
+        var {
+            font-weight: 400;
+            font-style: normal
+        }
+
+        h1,
+        strong {
+            font-weight: 700
+        }
+
+        strong {
+            font-style: normal
+        }
+
+        ol,
+        ul {
+            list-style: none
+        }
+
+        caption,
+        th {
+            text-align: left
+        }
+
+        h1 {
+            padding: 0;
+            font-size: 8em;
+            margin: 0 0 .25em
+        }
+
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-weight: 400;
+            font-size: 100%
+        }
+
+        q:after,
+        q:before {
+            content: ''
+        }
+
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box
+        }
+
+        #fullpage,
+        .section,
+        body,
+        html {
+            height: 100%
+        }
+
+        .section.fp-table {
+            display: table;
+            table-layout: fixed;
+            width: 100%
+        }
+
+        .fp-tableCell {
+            display: table-cell;
+            vertical-align: middle;
+            width: 100%;
+            height: 100%
+        }
+
+        .examples,
+        .fp-slidesNav.bottom {
+            display: none
+        }
+
+        body {
+            font-family: arial, helvetica;
+            color: #fff
+        }
+
+        [data-lang=ru] h1 {
+            font-size: 6em
+        }
+
+        #section-1 h2,
+        .intro p {
+            -webkit-font-smoothing: antialiased;
+            -moz-font-smoothing: antialiased
+        }
+
+        .intro p {
+            max-width: -webkit-calc(30em - (1.3em*2));
+            max-width: calc(30em - (1.3em*2));
+            margin-right: auto;
+            margin-left: auto;
+            padding-right: 1.3em;
+            padding-left: 1.3em;
+            font-size: 1.5em
+        }
+
+        #fp-nav ul li a span,
+        #menu-line,
+        .fp-slidesNav ul li a span {
+            background: #fff
+        }
+
+        .section,
+        .twitter-share i,
+        .wrap {
+            position: relative
+        }
+
+        .section {
+            text-align: center
+        }
+
+        .wrap {
+            margin-left: auto;
+            margin-right: auto;
+            width: 960px
+        }
+
+        #menu-line {
+            position: absolute;
+            top: 24px;
+            left: 0;
+            width: 159px;
+            height: 2px;
+            transition: all 600ms ease
+        }
+
+        #menu {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 70;
+            -webkit-font-smoothing: antialiased;
+            -moz-font-smoothing: antialiased;
+            letter-spacing: 1px;
+            font-size: 1.1em
+        }
+
+        #menu li {
+            display: inline-block;
+            margin: 10px 0
+        }
+
+        #menu a {
+            color: #fff;
+            padding: 0 1.1em 1.1em
+        }
+
+        .menu-active {
+            font-weight: 700
+        }
+
+        #menu-theme-mobile {
+            display: none
+        }
+
+        #section-1 {
+            background: #ff5f45
+        }
+
+        #section-1 h1 {
+            font-size: 10em;
+            font-weight: 900;
+            color: #fff
+        }
+
+        #section-1 h2 {
+            color: rgba(255, 255, 255, .7);
+            font-size: 1.73em;
+            font-weight: 100;
+            margin: -10px 30px 10px
+        }
+
+        #section-1 li,
+        .github-data {
+            display: inline-block;
+            margin: 1.25em .3em
+        }
+
+        .section-1-button {
+            padding: .93em 1.87em;
+            background: #fff;
+            border-radius: 5px;
+            display: block;
+            color: #ff5f45
+        }
+
+        #download a {
+            background: #004f69;
+            color: #fff
+        }
+
+        .section-1-usedBy {
+            background-image: url(https://alvarotrigo.com/fullPage/imgs/trusted-by.png);
+            width: 80%;
+            max-width: 536px;
+            height: 36px;
+            display: block;
+            margin: 0 auto;
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0
+        }
+
+        .language {
+            position: absolute;
+            left: 20px;
+            top: 14px;
+            z-index: 99;
+            opacity: 1
+        }
+
+        .languages {
+            display: none
+        }
+
+        .language-current {
+            margin: 15px 0 6px 15px;
+            z-index: 99;
+            cursor: pointer
+        }
+
+        .flag {
+            width: 35px;
+            height: 24px;
+            display: inline-block;
+            margin: 0 17px 0 0;
+            vertical-align: middle;
+            background-image: url(https://alvarotrigo.com/fullPage/imgs/flags.png)
+        }
+
+        .flag-chinese {
+            background-position: 0 0
+        }
+
+        .flag-english {
+            background-position: -35px 0
+        }
+
+        .flag-russian {
+            background-position: -70px 0
+        }
+
+        .flag-korean {
+            background-position: -105px 0
+        }
+
+        .flag-spanish {
+            background-position: -140px 0
+        }
+
+        .language-triangle {
+            position: absolute;
+            top: 22px;
+            left: 3px;
+            fill: #fff;
+            height: 6px;
+            width: 8px
+        }
+
+        .twitter-share i {
+            vertical-align: middle;
+            display: inline-block;
+            width: 38px;
+            height: 14px;
+            color: #fff;
+            top: -4px;
+            left: -2px;
+            fill: #fff
+        }
+
+        .twitter-share svg {
+            height: 40px;
+            margin-top: -10px
+        }
+
+        @media screen and (max-width:1135px) {
+            .fp-tableCell {
+                font-size: .9em
+            }
+
+            .examples-wrapper {
+                top: 100px;
+                -webkit-transform: none;
+                transform: none
+            }
+        }
+
+        @media screen and (max-width:1050px) {
+            .fp-tableCell {
+                font-size: .85em
+            }
+        }
+
+        @media screen and (max-width:1030px) {
+            #section-3 .intro {
+                width: 40%
+            }
+
+            .shell {
+                width: calc(60% - 54px)
+            }
+        }
+
+        @media screen and (max-width:900px) {
+            #section-3 .intro {
+                display: block;
+                text-align: center;
+                width: 100%
+            }
+
+            #section-3 .intro p {
+                display: none
+            }
+
+            .shell {
+                width: 80%;
+                margin: 0
+            }
+
+            #menu {
+                text-align: center;
+                left: 0;
+                right: 0
+            }
+
+            #menu-theme-desktop {
+                display: none !important
+            }
+
+            #menu-theme-mobile {
+                display: inline-block
+            }
+
+            .language {
+                left: 50%;
+                margin-left: -71px;
+                bottom: 70px;
+                top: auto;
+                transition: all 1s ease-in;
+                -webkit-transition: all .3s ease-in;
+                opacity: 0;
+                visibility: hidden
+            }
+
+            .fp-viewing-page1 .language {
+                display: block;
+                opacity: 1;
+                visibility: visible
+            }
+        }
+
+        @media screen and (max-width:700px) {
+            .fp-tableCell {
+                font-size: .8em
+            }
+
+            #menu a {
+                padding: 0 .7em .7em
+            }
+
+            .my-arrow.left,
+            .my-arrow.right {
+                display: none
+            }
+
+            .fp-slidesNav.bottom {
+                display: block
+            }
+        }
+
+        @media screen and (max-width:630px) {
+            h1 {
+                font-size: 6.5em
+            }
+
+            #menu {
+                letter-spacing: 0;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'
+            }
+        }
+
+        @media screen and (max-width:550px) {
+            #section-1 h1 {
+                font-size: 6em
+            }
+
+            h1 {
+                font-size: 5em
+            }
+
+            .intro p {
+                max-width: 75%
+            }
+
+            #menu li a {
+                padding: 0 .7em .7em
+            }
+
+            #download,
+            #menu-contact,
+            .mobile-hide {
+                display: none !important
+            }
+
+            .shell-body {
+                margin: 1.6em
+            }
+
+            #fp-nav.right {
+                right: 7px
+            }
+        }
+
+        @media screen and (max-width:380px) {
+            h1 {
+                font-size: 3.5em
+            }
+
+            .intro p {
+                max-width: 85%
+            }
+
+            #section-3 .shell {
+                font-size: .8em
+            }
+
+            .shell-body {
+                margin: 1em
+            }
+        }
+
+        @media only screen and (min-width:551px) {
+            .mobile-show {
+                display: none
+            }
+        }
+    </style>
+
+    <!--[if IE]>
+        <script type="text/javascript">
+             var console = { log: function() {} };
+        </script>
+    <![endif]-->
+    <style id="stylesheet-responsive" type="text/css">
+        @CHARSET "ISO-8859-1";
+
+        @media screen and (max-width:1135px) {
+            .fp-tableCell {
+                font-size: .9em
+            }
+
+            .examples-wrapper {
+                top: 100px;
+                -webkit-transform: none;
+                transform: none
+            }
+        }
+
+        @media screen and (max-width:1050px) {
+            .fp-tableCell {
+                font-size: .85em
+            }
+        }
+
+        @media screen and (max-width:1030px) {
+            #section-3 .intro {
+                width: 40%
+            }
+
+            .shell {
+                width: calc(60% - 54px)
+            }
+        }
+
+        @media screen and (max-width:900px) {
+            #section-3 .intro {
+                display: block;
+                text-align: center;
+                width: 100%
+            }
+
+            #section-3 .intro p {
+                display: none
+            }
+
+            .shell {
+                width: 80%;
+                margin: 0
+            }
+
+            #menu {
+                text-align: center;
+                left: 0;
+                right: 0
+            }
+
+            #menu-theme-desktop {
+                display: none !important
+            }
+
+            #menu-theme-mobile {
+                display: inline-block
+            }
+
+            .language {
+                left: 50%;
+                margin-left: -71px;
+                bottom: 70px;
+                top: auto;
+                transition: all 1s ease-in;
+                -webkit-transition: all .3s ease-in;
+                opacity: 0;
+                visibility: hidden
+            }
+
+            .fp-viewing-page1 .language {
+                display: block;
+                opacity: 1;
+                visibility: visible
+            }
+        }
+
+        @media screen and (max-height:500px) {
+            .section-1-usedBy {
+                display: none
+            }
+
+            .fp-slidesNav.bottom {
+                bottom: 0
+            }
+
+            .trusted-by-big {
+                background-position: 50% 0;
+                height: 54px
+            }
+        }
+
+        @media screen and (max-height:330px) {
+            .fp-section {
+                height: 350px !important
+            }
+        }
+
+        @media screen and (max-width:700px),
+        screen and (max-height:500px) {
+            .fp-tableCell {
+                font-size: .8em
+            }
+
+            #menu a {
+                padding: 0 .7em .7em
+            }
+
+            .my-arrow.left,
+            .my-arrow.right {
+                display: none
+            }
+
+            .fp-slidesNav.bottom {
+                display: block
+            }
+        }
+
+        @media screen and (max-width:630px) {
+            h1 {
+                font-size: 6.5em
+            }
+
+            #menu {
+                letter-spacing: 0;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'
+            }
+
+            [data-lang=ru] h1 {
+                font-size: 4em
+            }
+        }
+
+        @media screen and (max-width:550px) {
+            #section-1 h1 {
+                font-size: 6em
+            }
+
+            h1 {
+                font-size: 5em
+            }
+
+            [data-lang=ru] h1 {
+                font-size: 3.6em
+            }
+
+            .intro p {
+                max-width: 75%
+            }
+
+            #menu li a {
+                padding: 0 .7em .7em
+            }
+
+            [data-lang=es] #menu li a,
+            [data-lang=ru] #menu li a {
+                padding: 0 .4em .4em
+            }
+
+            [data-lang=es] #menu,
+            [data-lang=ru] #menu {
+                font-size: .98em
+            }
+
+            #download,
+            #menu-contact,
+            .mobile-hide {
+                display: none !important
+            }
+
+            .shell-body {
+                margin: 1.6em
+            }
+
+            #fp-nav.right {
+                right: 7px
+            }
+        }
+
+        @media screen and (max-width:380px) {
+            h1 {
+                font-size: 3.5em
+            }
+
+            .intro p {
+                max-width: 85%
+            }
+
+            #section-3 .shell {
+                font-size: .8em
+            }
+
+            .shell-body {
+                margin: 1em
+            }
+        }
+
+        @media only screen and (min-width:551px) {
+            .mobile-show {
+                display: none
+            }
+        }
+    </style>
+</head>
+
+<body data-lang="en">
+    <div id="fullpage">
+
+
+        <!-- section 1 -->
+        <div class="section fp-table" id="section-1">
+            <div class="fp-tableCell">
+                <h1>Hungry</h1>
+                <h2>Combatendo a fome no Brasil</h2>
+            </div>
+        </div><!-- section 1 -->
+
+        <!-- section 2 -->
+        <div class="section" id="section-2">
+         
+            <div class="slide active">
+                <div class="intro">
+                    <h1>Participar</h1>
+                    <p>
+                        Para doar alimentos é preciso ter um cadastro para receber as notificações de alimentos
+                        recebidos pelas ONGs
+                    </p>
+
+                    <ul>
+                        <li class="github-data github-data-1" data-github="commits">
+                            <h4>+1000</h4>
+                            <span>Alimentos Doados</span>
+                        </li>
+
+                        <li class="github-data github-data-2" data-github="closed_issues">
+                            <h4>+100</h4>
+                            <span>ONGs foram ajudadas</span>
+                        </li>
+
+                        <li class="github-data github-data-3" data-github="contributors">
+                            <h4>+500</h4>
+                            <span>Pessoas já ajudaram</span>
+                        </li>
+                    </ul>
+                </div>
+    
+            </div>
+     
+        </div><!-- section 2 -->
+
+        <!-- section 3 -->
+        <div class="section" id="section-4">
+            <div class="intro">
+                <div class="section-4-finger"></div>
+                <h1> Para Doar</h1>
+                <p>Selecione uma ONG e cadastre a sua doação</p>
+            </div>
+        </div><!-- section 3 -->
+
+        <!-- section 4 -->
+        <div class="section" id="section-1">
+            <div class="intro">
+                <h1>ONGs</h1>
+                <p>
+                    Escolha uma ONG que esteja mais próxima de você
+                </p>
+                <br>
+            </div>
+            <!--
+                            -->
+            <img src="imgs/ongs.png" alt="">
+
+
+        </div><!-- section 4 -->
+
+        <!-- section 5 -->
+        <div class="section fp-table" id="section-2">
+            <div class="fp-tableCell">
+                <div class="intro">
+                    <h1>Entregue!</h1>
+                    <p>
+                        Todas as doações são notificadas quando chegam
+                    </p>
+                    <br>
+                </div>
+                <!--
+                    -->
+                <img src="imgs/notification.png" alt="">
+
+            </div>
+        </div><!-- section 5 -->
+
+        <!-- section 6 -->
+        <div class="section fp-table" id="section-1">
+            <div class="fp-tableCell">
+                <div class="intro">
+                    <h1>Muito Obrigado!</h1>
+                    <p>
+                        Qualquer doação é um ponto de partida para um mundo melhor
+                    </p>
+                    <br>
+                </div>
+                <!--
+                            -->
+                <img src="imgs/doacao.jpg" alt="">
+
+            </div>
+        </div><!-- section 6 -->
+
+
+
+
+
+        <ul id="menu">
+            <li class="menu-active">
+                <a rel="noopener">
+                    <span id="menu-theme-desktop">Hungry</span>
+                </a>
+            </li>
+            <li><a class="show-examples">Larrany</a></li>
+            <li><a class="show-examples">Giovanna</a></li>
+            <li>
+                <a rel="noopener">Renan</a>
+            </li>
+
+        </ul>
+
+
+        <div class="examples">
+            <a href="#" class="info-close"></a>
+            <div class="examples-wrapper">
+                <div class="examples-column">
+                    <h3>Navigation</h3>
+                    <ul>
+                        <li><a href="https://alvarotrigo.com/fullPage/examples/scrollBar.html">Scroll Bar Enabled</a>
+                        </li>
+                        <li><a href="https://alvarotrigo.com/fullPage/examples/normalScroll.html">Normal scrolling</a>
+                        </li>
+                        <li><a href="https://alvarotrigo.com/fullPage/examples/continuous.html">Continuous vertical</a>
+                        </li>
+                        <li><a href="https://alvarotrigo.com/fullPage/examples/noAnchor.html">Without anchor links (same
+                                URL)</a></li>
+                        <li><a href="https://alvarotrigo.com/fullPage/examples/navigationV.html">Vertical navigation
+                                dots</a></li>
+                        <li><a href="https://alvarotrigo.com/fullPage/examples/navigationH.html">Horizontal navigation
+                                dots</a></li>
+                    </ul>
+                </div>
+                <div class="examples-column">
+                    <h3>Extensions</h3>
+                    <ul>
+                        <li><a href="https://alvarotrigo.com/fullPage/extensions/cards.html">Cards 3D</a></li>
+                        <li><a href="https://alvarotrigo.com/fullPage/extensions/parallax.html">Parallax</a></li>
+                        <li><a href="https://alvarotrigo.com/fullPage/extensions/continuous-horizontal.html">Continuous
+                                Horizontal</a></li>
+                        <li><a href="https://alvarotrigo.com/fullPage/extensions/interlocked-slides.html">Interlocked
+                                Slides</a></li>
+                        <li><a href="https://alvarotrigo.com/fullPage/extensions/reset-sliders.html">Reset Sliders</a>
+                        </li>
+                        <li><a href="https://alvarotrigo.com/fullPage/extensions/responsive-slides.html">Responsive
+                                Slides</a></li>
+                        <li><a href="https://alvarotrigo.com/fullPage/extensions/scroll-horizontally.html">Scroll
+                                Horizontally</a></li>
+                        <li><a href="https://alvarotrigo.com/fullPage/extensions/fading-effect.html">Fading Effect</a>
+                        </li>
+                        <li><a href="https://alvarotrigo.com/fullPage/extensions/offset-sections.html">Offset
+                                Sections</a>
+                        </li>
+                        <li><a href="https://alvarotrigo.com/fullPage/extensions/drag-and-move.html">Drag And Move</a>
+                        </li>
+                        <li><a href="https://alvarotrigo.com/fullPage/extensions/scrolloverflow-reset.html">ScrollOverflow
+                                Reset</a></li>
+                    </ul>
+                </div>
+                <div class="examples-column">
+                    <h3>Design</h3>
+                    <ul>
+                        <li><a href="https://alvarotrigo.com/fullPage/examples/responsive.html">Responsive</a></li>
+                        <li><a href="https://alvarotrigo.com/fullPage/examples/backgrounds.html">Full backgrounds</a>
+                        </li>
+                        <li><a href="https://alvarotrigo.com/fullPage/examples/videoBackground.html">Full background
+                                videos</a></li>
+                        <li><a href="https://alvarotrigo.com/fullPage/examples/autoHeight.html">Auto-height sections</a>
+                        </li>
+                        <li><a href="https://alvarotrigo.com/fullPage/examples/gradientBackgrounds.html">Gradient
+                                backgrounds</a></li>
+                        <li><a href="https://alvarotrigo.com/fullPage/examples/scrolling.html">Scrolling inside sections
+                                and
+                                slides</a></li>
+                        <li><a href="https://alvarotrigo.com/fullPage/examples/fixedHeaders.html">Adding fixed header
+                                and
+                                footer</a></li>
+                        <li><a href="https://alvarotrigo.com/fullPage/examples/oneSection.html">One single section</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="examples-column">
+                    <h3>Other</h3>
+                    <ul>
+                        <li><a href="https://alvarotrigo.com/fullPage/examples/apple.html">Animations on scrolling</a>
+                        </li>
+                        <li><a href="https://alvarotrigo.com/fullPage/examples/callbacks.html">Callbacks</a></li>
+                        <li><a href="https://alvarotrigo.com/fullPage/examples/methods.html">Functions and methods</a>
+                        </li>
+                        <li>&nbsp;</li>
+                    </ul>
+                    <h3>Wrappers</h3>
+                    <ul>
+                        <li><a href="https://alvarotrigo.com/vue-fullpage/">Vue.js</a></li>
+                        <li><a href="https://alvarotrigo.com/react-fullpage/">React.js</a></li>
+                        <li><a href="https://alvarotrigo.com/angular-fullpage/">Angular</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript"
+            src="https://alvarotrigo.com/fullPage/dist/fullpage.dragAndMove2.limited.min.js?v6">
+        </script>
+
+        <script type="text/javascript" src="https://alvarotrigo.com/fullPage/fullpage.extensions.min.js"></script>
+        <script type="text/javascript">
+            new fullpage('#fullpage', {
+                anchors: ['page1', 'page2', 'page3', 'page4', 'page5', 'page6'],
+                navigationTooltips: ['Capa', 'Entrada', 'Instrução', 'ONGS', 'Notificação', 'Agradecimento'],
+                css3: true,
+                scrollingSpeed: 1000,
+                navigation: true,
+                slidesNavigation: true,
+                responsiveHeight: 330,
+                dragAndMove: true,
+                dragAndMoveKey: 'YWx2YXJvdHJpZ28uY29tX0EyMlpISmhaMEZ1WkUxdmRtVT0wWUc=',
+                controlArrows: false
+            });
+        </script>
+        <script type="text/javascript">
+            ! function (t, n) {
+                "use strict";
+                var e, i, a, s, o, l, c, u, r, f, d = fp_utils.$,
+                    p = fp_utils.after,
+                    h = fp_utils.hasClass,
+                    g = fp_utils.addClass,
+                    v = fp_utils.toggleClass,
+                    m = fp_utils.removeClass,
+                    L = fp_utils.siblings,
+                    E = fp_utils.preventDefault,
+                    y = ".language",
+                    w = d("#menu-line")[0],
+                    _ = d(".menu-active").offsetWidth,
+                    x = 0,
+                    k = 40,
+                    b = "active";
+
+                function T() {
+                    k = 2 * parseFloat(getComputedStyle(fp_utils.$(".menu-active a")[0]).paddingLeft)
+                }
+
+                function C(e) {
+                    switch (e.keyCode) {
+                        case 27:
+                            h(d(".examples")[0], b) && H()
+                    }
+                }
+
+                function S() {
+                    h(this, "left") ? fullpage_api.moveSlideLeft() : fullpage_api.moveSlideRight()
+                }
+
+                function W() {
+                    var e = decodeURIComponent(n.location.hash.substr(1));
+                    e.length && (d("." + e, t).length && fp_utils.trigger(d(".show-examples")[0], "click"))
+                }
+
+                function A() {
+                    clearTimeout(e), e = setTimeout(R, 350)
+                }
+
+                function R() {
+                    if (_ = d(".menu-active")[0].offsetWidth, n.innerWidth <= 900) {
+                        T();
+                        var e = d("#menu a")[0];
+                        q.call(e), x = e.offsetLeft
+                    } else 900 < n.innerWidth && (T(), q.call(d("#menu a")[0]), x = 0)
+                }
+
+                function H() {
+                    clearTimeout(i), i = setTimeout(function () {
+                        P(".examples"), fullpage_api.setAllowScrolling(!0)
+                    }, 300)
+                }
+
+                function O(e) {
+                    P(".examples"), fullpage_api.setAllowScrolling(!1)
+                }
+
+                function P(e) {
+                    v(d(e)[0], b)
+                }
+
+                function U(e) {
+                    void 0 !== e && (E(e), (e || n.event).stopPropagation()), P(y)
+                }
+
+                function j(e) {
+                    m(d(y)[0], b)
+                }
+
+                function q() {
+                    var e = this.parentNode;
+                    F(e.offsetLeft, e.offsetWidth)
+                }
+
+                function D() {
+                    F(x, _)
+                }
+
+                function F(e, t) {
+                    w.style.left = e + k / 2 + "px", w.style.width = t - k + "px"
+                }
+
+                function M(e) {
+                    E(e);
+                    var t = this.getAttribute("href").substr(1);
+                    g(this, b), m(L(this), b);
+                    var n = d('[data-tab="' + t + '"]')[0];
+                    g(n, b), m(L(n), b)
+                }
+                r = "https://alvarotrigo.com/fullPage/dist/non-critical.min.css", f = n.document.createElement("link"),
+                    n
+                    .document.styleSheets, f.rel = "stylesheet", f.href = r, p(d("#stylesheet-critical")[0], f), T(), w
+                    .style.width = _ - k + "px", w.style.left = "20px", "en" !== (!(a = navigator.language || navigator
+                        .userLanguage) || a.indexOf("-") < 0 ? a : a.split("-")[0]) && U(), A(), d("#menu li a")
+                    .forEach(
+                        function (e) {
+                            e.addEventListener("mouseover", q), e.addEventListener("mouseout", D)
+                        }), n.addEventListener("resize", A), n.addEventListener("load", W), d(".shell-tab").forEach(
+                        function (e) {
+                            e.addEventListener("click", M)
+                        }), d(".language-current")[0].addEventListener("click", U), d("html")[0].addEventListener(
+                        "click",
+                        j), d(".info-close")[0].addEventListener("touchstart", H), d(".info-close")[0].addEventListener(
+                        "click", H), d(".show-examples")[0].addEventListener("click", O), t.addEventListener("keydown",
+                        C),
+                    d(".my-arrow").forEach(function (e) {
+                        e.addEventListener("click", S)
+                    }), s = "GET", o = "https://alvarotrigo.com/fullPage/routes/github-api.php", l = null, c =
+                    function (
+                        e) {
+                        var n = JSON.parse(e),
+                            t = Object.keys(n);
+                        t.forEach(function (e) {
+                            var t = d('[data-github="' + e + '"] h4')[0];
+                            t && (t.innerHTML = n[e])
+                        })
+                    }, (u = new XMLHttpRequest).open(s, o, !0), u.setRequestHeader("Content-Type",
+                        "application/x-www-form-urlencoded; charset=UTF-8"), u.send(l), u.onreadystatechange =
+                    function () {
+                        4 === u.readyState && (200 === u.status ? c(u.responseText) : console.log("Error: " + u.status))
+                    },
+                    function () {
+                        function e() {
+                            dataLayer.push(arguments)
+                        }
+                        n.dataLayer = n.dataLayer || [], e("js", new Date), e("config", "UA-94005074-1"), e("config",
+                            "AW-1012934304")
+                    }()
+            }(document, window);
+        </script>
+
+        <!-- Google Analytics (do not copy!) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94005074-1"></script>
+        <!-- End Google Analytics -->
+
+
+        <noscript><img height="1" width="1" style="display:none" alt="fb"
+                src="https://www.facebook.com/tr?id=1786065945027357&ev=PageView&noscript=1"></noscript>
+        <input type="hidden" id="_4" value="7e68giOjsw">
+        <!-- DO NOT MODIFY -->
+        <!-- End Facebook Pixel Code -->
+
+</body>
+
+</html>
